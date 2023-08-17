@@ -1,6 +1,4 @@
 import 'dart:async';
-//import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
@@ -9,14 +7,26 @@ void main() {
   runApp(Test());
 }
 
-class Test extends StatefulWidget {
-  const Test({Key? key}) : super(key: key);
-
+class Test extends StatelessWidget {
   @override
-  _TestState createState() => _TestState();
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(color: Colors.blue),
+          textTheme: const TextTheme(
+            bodyText2: TextStyle(fontSize: 24),
+          ),
+        ),
+        home: _TestState(),
+      );
 }
 
-class _TestState extends State<Test> {
+class _TestState extends StatefulWidget {
+  @override
+  __TestStateState createState() => __TestStateState();
+}
+
+class __TestStateState extends State<_TestState> {
   List<Article> articles = [];
 
   @override
@@ -47,8 +57,6 @@ class _TestState extends State<Test> {
         .map((element) => element.attributes['src']!)
         .toList();
 
-    //print('Count: ${titles , length}');
-
     setState(() {
       articles = List.generate(
         titles.length,
@@ -60,10 +68,6 @@ class _TestState extends State<Test> {
       );
     });
   }
-  //     for (final title in titles){
-  //      debugPrint(title);
-  //    }
-//  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
