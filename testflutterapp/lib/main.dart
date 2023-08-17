@@ -12,16 +12,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String price = '';
+  String searchInput = '';
 
-  Future<void> _scrapePrice() async {
-    var response = await http
-        .get(Uri.parse('https://www.binance.com/en/markets/coinInfo-BTCUSDT'));
+  Future<void> _scrapeSearchInput() async {
+    var response = await http.get(Uri.parse('https://www.google.lk'));
     if (response.statusCode == 200) {
       var document = parse(response.body);
-      var priceElement = document.querySelector('.price-current');
+      var searchInputElement = document.querySelector('input[name="q"]');
       setState(() {
-        price = priceElement?.text ?? 'Price not found';
+        searchInput =
+            searchInputElement?.attributes['value'] ?? 'Input not found';
       });
     }
   }
@@ -34,10 +34,10 @@ class _MyAppState extends State<MyApp> {
           title: Text('Web Scraping'),
         ),
         body: Center(
-          child: Text(price),
+          child: Text(searchInput),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _scrapePrice,
+          onPressed: _scrapeSearchInput,
           child: Icon(Icons.refresh),
         ),
       ),
